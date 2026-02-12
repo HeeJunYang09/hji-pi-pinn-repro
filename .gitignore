@@ -1,0 +1,49 @@
+__pycache__/
+*.py[cod]
+*.so
+.ipynb_checkpoints/
+wandb/
+*.log
+*.out
+nohup.out
+.pytest_cache/
+
+# external/large data (folder kept, files ignored)
+data/*
+!data/.gitkeep
+
+# binary arrays
+*.npy
+*.npz
+
+# outputs: keep curated checkpoints only
+outputs/*
+!outputs/path_run/
+!outputs/ps_run/
+outputs/path_run/*
+!outputs/path_run/*.pkl
+outputs/ps_run/*
+!outputs/ps_run/3d/
+!outputs/ps_run/5d/
+!outputs/ps_run/11d/
+outputs/ps_run/3d/*
+outputs/ps_run/5d/*
+outputs/ps_run/11d/*
+!outputs/ps_run/3d/*.pkl
+!outputs/ps_run/5d/*.pkl
+!outputs/ps_run/11d/*.pkl
+
+# do not track temporary/backup checkpoints
+outputs/path_run/ckpt.pkl
+outputs/ps_run/ps_test.pkl
+outputs/ps_run/bak/
+
+# figures: keep exported final images
+plots/figures/*
+!plots/figures/*.png
+!plots/figures/*.pdf
+
+results/
+
+.DS_Store
+Thumbs.db

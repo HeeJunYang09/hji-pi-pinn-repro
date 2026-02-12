@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "hji-pi-pinn (repro)"
+message: "If you use this code, please cite this software."
+type: software
+authors:
+  - name: "hji-pi-pinn contributors"
+version: 1.0.0
+date-released: 2026-02-12

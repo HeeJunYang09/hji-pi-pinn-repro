@@ -1,0 +1,20 @@
+problem:
+  domain_t: [0.0, 1.0]
+  domain_x: [-1.0, 1.0]
+  dim_x: 2
+  tf: 1.0
+  lambda_1: 0.1
+  lambda_2: 100.0
+  lambda_3: 10.0
+  delta: 0.1
+  epsilon: 0.3
+  x_goal: [0.9, 0.9]
+  sigma_scale: 0.1
+
+train:
+  Ni: 20000
+  num_iters: 200
+  num_epochs: 5000
+  lr: 1.0e-3
+  seed: 0
+  unit: 64
