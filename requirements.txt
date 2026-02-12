@@ -1,7 +1,7 @@
 # Reproducible baseline (tested in this repo)
-# Recommended Python: 3.9-3.10
-jax==0.4.8
-jaxlib==0.4.7
+# Recommended Python: 3.9-3.11
+jax==0.4.30
+jaxlib==0.4.30
 optax==0.1.4
 numpy==1.26.4
 matplotlib==3.10.0

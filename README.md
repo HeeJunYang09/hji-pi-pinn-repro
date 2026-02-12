@@ -13,9 +13,9 @@ pip install -r requirements.txt
 ```
 
 Tested baseline:
-- Python `3.9-3.10`
-- `jax==0.4.8`
-- `jaxlib==0.4.7`
+- Python `3.9-3.11`
+- `jax==0.4.30`
+- `jaxlib==0.4.30`
 - `optax==0.1.4`
 - `numpy==1.26.4`
 - `matplotlib==3.10.0`
@@ -25,6 +25,8 @@ Tested baseline:
 Notes:
 - `requirements.txt` is a CPU-safe pinned baseline.
 - For CUDA, install a CUDA-compatible JAX/JAXLIB wheel first, then install the rest.
+- If install fails on an old pip, run:
+  `pip install --upgrade pip setuptools wheel`
 
 ## Project Layout
 - `configs/`: YAML configs
@@ -45,6 +47,11 @@ Repository tracking policy:
 - `data/`: folder only (dataset files are not tracked)
 - `outputs/`: curated checkpoint `.pkl` files are tracked
 - `plots/figures/`: final `.png`/`.pdf` figures are tracked
+
+Quick data validation:
+```bash
+python scripts/check_data.py
+```
 
 ## Training
 YAML format:

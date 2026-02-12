@@ -16,7 +16,7 @@ Google Drive folder (official):
 - SHA256: `b311e88a4491d3243f73a62dcfc5729df621a569de03c47004eb8fa4168e4f3a`
 
 2. Publisher-subscriber 3D FDM reference
-- Local target path: `data/PS3D_a1_b1_c0p5_al-2_be2_h600_sig0p1I.npy`
+- Local target path: `data/PS3D_a1_b1_c0p5_al-2_be2_sig0p1I_nx201.npy`
 - Used by: `plots/Figure_3.py`, `plots/Figure_4_5.py`
 - Size (approx): `372 MB`
 - Download link: Google Drive folder above
@@ -29,7 +29,13 @@ Google Drive folder (official):
 3. Verify checksums.
 4. Run training/plot scripts from repo root.
 
+If files are still not detected, run:
+```bash
+python scripts/check_data.py
+```
+This reports missing filenames and hash mismatches.
+
 Checksum command:
 ```bash
-sha256sum data/PP2D_bcN_l10p1_l2100_l310_om-2_2_nx101.npy data/PS3D_a1_b1_c0p5_al-2_be2_h600_sig0p1I.npy
+sha256sum data/PP2D_bcN_l10p1_l2100_l310_om-2_2_nx101.npy data/PS3D_a1_b1_c0p5_al-2_be2_sig0p1I_nx201.npy
 ```
