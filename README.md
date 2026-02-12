@@ -18,7 +18,7 @@ Tested baseline:
 - `jaxlib==0.4.30`
 - `optax==0.1.4`
 - `numpy==1.26.4`
-- `matplotlib==3.10.0`
+- `matplotlib==3.9.4`
 - `tqdm==4.67.1`
 - `PyYAML==6.0.2`
 
@@ -27,6 +27,8 @@ Notes:
 - For CUDA, install a CUDA-compatible JAX/JAXLIB wheel first, then install the rest.
 - If install fails on an old pip, run:
   `pip install --upgrade pip setuptools wheel`
+- Equivalent explicit install:
+  `pip install "jax==0.4.30" "jaxlib==0.4.30" "optax==0.1.4" "numpy==1.26.4" "matplotlib==3.9.4" "tqdm==4.67.1" "PyYAML==6.0.2"`
 
 ## Project Layout
 - `configs/`: YAML configs

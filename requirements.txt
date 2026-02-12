@@ -4,6 +4,6 @@ jax==0.4.30
 jaxlib==0.4.30
 optax==0.1.4
 numpy==1.26.4
-matplotlib==3.10.0
+matplotlib==3.9.4
 tqdm==4.67.1
 PyYAML==6.0.2
