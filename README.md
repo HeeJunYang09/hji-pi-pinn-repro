@@ -16,7 +16,7 @@ Tested baseline:
 - Python `3.9-3.11`
 - `jax==0.4.30`
 - `jaxlib==0.4.30`
-- `optax==0.1.4`
+- `optax==0.2.4`
 - `numpy==1.26.4`
 - `matplotlib==3.9.4`
 - `tqdm==4.67.1`
@@ -24,11 +24,10 @@ Tested baseline:
 
 Notes:
 - `requirements.txt` is a CPU-safe pinned baseline.
-- For CUDA, install a CUDA-compatible JAX/JAXLIB wheel first, then install the rest.
+- For GPU/CUDA, install JAX/JAXLIB using the official JAX installation guide for your CUDA/driver version, then install the remaining dependencies.
+- On CPU-only installs, a message like "CUDA-enabled jaxlib is not installed, falling back to cpu" is expected.
 - If install fails on an old pip, run:
   `pip install --upgrade pip setuptools wheel`
-- Equivalent explicit install:
-  `pip install "jax==0.4.30" "jaxlib==0.4.30" "optax==0.1.4" "numpy==1.26.4" "matplotlib==3.9.4" "tqdm==4.67.1" "PyYAML==6.0.2"`
 
 ## Project Layout
 - `configs/`: YAML configs
@@ -41,9 +40,21 @@ Notes:
 ## Data Policy
 Large data should be hosted externally and linked (Google Drive, Zenodo, Hugging Face Datasets, etc.).
 
-Required reference files are documented in `docs/DATA.md`.
-Current data folder link:
+Download source:
 `https://drive.google.com/drive/folders/1Ccjkm_PXA_smmYGG9z9tAyHpXScJ2BFc?usp=drive_link`
+
+How to use:
+1. Download data files from the Google Drive folder above.
+2. Follow `docs/DATA.md` for exact filenames/target paths/checksum values.
+3. Validate placement and integrity:
+   `python scripts/check_data.py`
+
+Optional CLI download (server-friendly):
+```bash
+pip install -U gdown
+gdown 1s_AGJq0PfWXpZX6PRB2UCLEO7lZO76-2 -O data/PP2D_bcN_l10p1_l2100_l310_om-2_2_nx101.npy
+gdown 1aAQKeJau7u-KwAI-RoH17BBvqZRIebnV -O data/PS3D_a1_b1_c0p5_al-2_be2_sig0p1I_nx201.npy
+```
 
 Repository tracking policy:
 - `data/`: folder only (dataset files are not tracked)
