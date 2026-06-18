@@ -18,6 +18,7 @@ train:
   Ni: 9000 # number of initial points ( 1000 * N^2)
   num_iters: 500
   num_epochs: 5000
+  refresh_every: 500
   lr: 1.0e-3
   seed: 0
   unit: 64

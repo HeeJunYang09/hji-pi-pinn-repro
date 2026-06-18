@@ -114,12 +114,13 @@ def main():
     comps = build_ps_components(cfg, seed=seed)
 
     unit = int(trn.get("unit", 64))
-    layers = [cfg.N + 1, unit, unit, unit, 1]
+    layers = [cfg.N + 1, unit, unit, unit, unit, 1]
 
     Ni = int(trn.get("Ni", 25000))
     num_iters = int(trn.get("num_iters", 500))
     num_epochs = int(trn.get("num_epochs", 5000))
     lr = float(trn.get("lr", 1e-3))
+    refresh_every = int(trn.get("refresh_every", 500))
 
     v_fdm = None
     if args.fdm_path:
@@ -128,15 +129,24 @@ def main():
         if v_fdm.ndim == 3:
             v_fdm = v_fdm[None, ...]
 
-    key = random.PRNGKey(seed)
-    k_p, k_b, k_pol = random.split(key, 3)
+    key = random.key(seed)
+    if mode == "pi":
+        init_keys = random.split(key, 4)
+        k_p = init_keys[2]
+        iter_key = random.split(init_keys[-1], 3)
+        k_b = iter_key[-1]
+    else:
+        init_keys = random.split(key, 2)
+        k_p = init_keys[0]
+        iter_key = random.split(init_keys[-1], 3)
+        k_b = iter_key[-1]
     params = init_params(layers, k_p)
 
     opt = optax.adam(lr)
     opt_state = opt.init(params)
 
     batch = comps["sample_batch"](k_b, Ni)
-    policy = comps["init_policy"](k_pol, batch) if mode == "pi" else None
+    policy = comps["init_policy_from_keys"](init_keys[0], init_keys[1], batch) if mode == "pi" else None
 
     t0 = time.time()
     l2_history = []
@@ -158,16 +168,26 @@ def main():
         total_steps = num_iters * num_epochs
         pbar, upd = make_pbar(total_steps, desc=f"PS-{mode}")
         done = 0
+        policy_params = None
         for it in range(num_iters):
+            frozen_policy_params = policy_params
             for _ in range(num_epochs):
+                ep = done % num_epochs
+                if refresh_every and ep > 0 and ep % refresh_every == 0:
+                    iter_key = random.split(iter_key[1], 2)
+                    keys = random.split(iter_key[0], 3)
+                    batch = comps["sample_batch"](keys[0], Ni)
+                    if frozen_policy_params is None:
+                        policy = comps["init_policy_from_keys"](keys[1], keys[2], batch)
+                    else:
+                        policy = policy_update(frozen_policy_params, batch)
                 params, opt_state, loss = step(params, opt_state, batch, policy)
                 done += 1
                 upd(done, loss)
 
-            # resample + policy update (outer iteration)
-            k_b, k_pol = random.split(k_b, 2)
-            batch = comps["sample_batch"](k_b, Ni)
-            policy = policy_update(params, batch)
+            # Policy update on the current collocation batch, matching the original experiment script.
+            policy_params = params
+            policy = policy_update(policy_params, batch)
 
             if v_fdm is not None and (it + 1) % args.eval_every_outer == 0:
                 m = compute_fdm_metrics(params, cfg, v_fdm, t_idx=0)
@@ -189,9 +209,10 @@ def main():
         pbar, upd = make_pbar(total_steps, desc=f"PS-{mode}")
         done = 0
         for ep in range(total_epochs):
-            if (ep + 1) % 500 == 0:
-                k_b, _ = random.split(k_b, 2)
-                batch = comps["sample_batch"](k_b, Ni)
+            if refresh_every and (ep + 1) % refresh_every == 0:
+                iter_key = random.split(iter_key[1], 2)
+                keys = random.split(iter_key[0], 3)
+                batch = comps["sample_batch"](keys[0], Ni)
 
             params, opt_state, loss = step(params, opt_state, batch)
             done += 1

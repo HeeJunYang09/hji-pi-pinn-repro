@@ -5,7 +5,7 @@ from jax import grad, hessian, vmap, random
 from typing import Dict, Any
 
 from hji_pi_pinn.core.models import forward
-from hji_pi_pinn.core.data import gen_random_tx, sample_ball
+from hji_pi_pinn.core.data import gen_random_tx
 
 @dataclass
 class PSConfig:
@@ -154,10 +154,19 @@ def build_ps_components(cfg: PSConfig, seed: int = 0) -> Dict[str, Any]:
     def init_policy(key, batch):
         Ni = batch["grid_tx"].shape[0]
         k1, k2 = random.split(key, 2)
-        u_keys = random.split(k1, Ni)
-        d_keys = random.split(k2, Ni)
-        u = jnp.stack([sample_ball(k, 1.0, cfg.N - 1) for k in u_keys], axis=0)
-        d = jnp.stack([sample_ball(k, 1.0, cfg.N - 1) for k in d_keys], axis=0)
+        return init_policy_from_keys(k1, k2, batch)
+
+    def init_policy_from_keys(u_key, d_key, batch):
+        Ni = batch["grid_tx"].shape[0]
+        def sample_ball_legacy(key, radius, dim):
+            normal = random.normal(key, shape=(dim,))
+            unit_vec = normal / jnp.linalg.norm(normal)
+            r = random.uniform(key, shape=()) ** (1.0 / dim)
+            return radius * r * unit_vec
+        u_keys = random.split(u_key, Ni)
+        d_keys = random.split(d_key, Ni)
+        u = jnp.stack([sample_ball_legacy(k, 1.0, cfg.N - 1) for k in u_keys], axis=0)
+        d = jnp.stack([sample_ball_legacy(k, 1.0, cfg.N - 1) for k in d_keys], axis=0)
         return {"u": u, "d": d}
 
     return dict(
@@ -168,4 +177,5 @@ def build_ps_components(cfg: PSConfig, seed: int = 0) -> Dict[str, Any]:
         policy_update=policy_update,
         sample_batch=sample_batch,
         init_policy=init_policy,
+        init_policy_from_keys=init_policy_from_keys,
     )
