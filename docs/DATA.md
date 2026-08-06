@@ -22,6 +22,22 @@ Google Drive folder (official):
 - Download link: Google Drive folder above
 - SHA256: `a27c05b41e51fa5ef319ae959a661d94a3380439cf76c3d1c0b1302b4367922c`
 
+## Revised Experiment Artifacts
+
+The revised experiments add:
+
+1. A three-dimensional small-diffusion publisher-subscriber comparison.
+- Local path: `outputs/ps_small_diffusion/3d/`
+- Used by: `plots/Figure_8.py`
+- Contents: tracked PINN-PI and Direct PINN checkpoints for
+  `gamma in {0.10, 0.07, 0.05, 0.03, 0.01}` and five random seeds.
+- These checkpoints are tracked because the full 3D set is modest in size.
+
+2. A DeepONet baseline comparison for the moving-obstacle problem.
+- Figure asset: `plots/figures/Figure_9.pdf` and `plots/figures/Figure_9.png`
+- Metric summary: `outputs/deeponet_summary/figure9_metrics.json`
+- Full DeepONet checkpoints are not tracked because they are intermediate training artifacts. The baseline follows the Hamilton-Jacobi deep-operator-learning setup cited in the paper.
+
 ## Suggested Workflow
 
 1. Download files from links above.

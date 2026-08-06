@@ -33,7 +33,7 @@ Notes:
 - `configs/`: YAML configs
 - `scripts/`: training entrypoints
 - `hji_pi_pinn/`: core/problem modules
-- `plots/`: figure scripts (`Figure_1_2.py`, `Figure_3.py`, `Figure_4_5.py`, `Figure_6.py`, `Figure_7.py`, `Figure_8.py`)
+- `plots/`: figure scripts (`Figure_1_2.py`, `Figure_3.py`, `Figure_4_5.py`, `Figure_6.py`, `Figure_7.py`, `Figure_8.py`, `Figure_9.py`, `Figure_10.py`)
 - `data/`: external reference arrays (folder tracked, files excluded)
 - `outputs/`: curated checkpoint artifacts (`.pkl`) tracked for reproducibility
 
@@ -108,13 +108,17 @@ python plots/Figure_3.py
 python plots/Figure_4_5.py
 python plots/Figure_6.py
 python plots/Figure_7.py
-python plots/Figure_8.py
+python plots/Figure_8.py   # small-diffusion publisher-subscriber comparison
+python plots/Figure_9.py   # DeepONet comparison metric summary
+python plots/Figure_10.py  # Hamiltonian visualizations
 ```
 
 Figures are saved to `plots/figures/`.
 
 Note:
-- `Figure_8.py` is an analytical Hamiltonian visualization and does not require training checkpoints.
+- `Figure_8.py` uses the tracked 3D small-diffusion publisher-subscriber checkpoints under `outputs/ps_small_diffusion/3d/`.
+- `Figure_9.py` records the DeepONet comparison metrics used in the revised experiments. Full DeepONet checkpoints are not tracked because they are intermediate artifacts.
+- `Figure_10.py` is an analytical Hamiltonian visualization and does not require training checkpoints.
 
 ## Output Schema
 Path planning:

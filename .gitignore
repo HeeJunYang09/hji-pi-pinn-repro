@@ -20,6 +20,8 @@ data/*
 outputs/*
 !outputs/path_run/
 !outputs/ps_run/
+!outputs/ps_small_diffusion/
+!outputs/deeponet_summary/
 outputs/path_run/*
 !outputs/path_run/*.pkl
 outputs/ps_run/*
@@ -32,6 +34,12 @@ outputs/ps_run/11d/*
 !outputs/ps_run/3d/*.pkl
 !outputs/ps_run/5d/*.pkl
 !outputs/ps_run/11d/*.pkl
+outputs/ps_small_diffusion/*
+!outputs/ps_small_diffusion/3d/
+outputs/ps_small_diffusion/3d/*
+!outputs/ps_small_diffusion/3d/*.pkl
+outputs/deeponet_summary/*
+!outputs/deeponet_summary/*.json
 
 # do not track temporary/backup checkpoints
 outputs/path_run/ckpt.pkl

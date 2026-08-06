@@ -1,0 +1,13 @@
+{
+  "description": "Relative L2 errors at t=0 for the revised DeepONet comparison on held-out moving-obstacle target locations.",
+  "targets": ["(0.45,0.45)", "(0.45,0.75)", "(0.75,0.45)", "(0.75,0.75)"],
+  "pi_pinn": {
+    "mean": [1.525e-2, 8.777e-3, 9.226e-3, 2.440e-2],
+    "std": [1.121e-2, 2.884e-3, 2.999e-3, 6.966e-3],
+    "best": [6.135e-3, 6.454e-3, 6.695e-3, 1.270e-2]
+  },
+  "deeponet": {
+    "single_run": [2.027e-1, 1.263e-1, 6.758e-2, 5.703e-2]
+  },
+  "notes": "Full DeepONet checkpoints are not tracked. The baseline follows the Hamilton-Jacobi deep-operator-learning setup cited in the paper; this file records the table values used to accompany Figure 9."
+}
