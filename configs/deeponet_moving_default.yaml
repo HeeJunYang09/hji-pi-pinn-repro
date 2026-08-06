@@ -1,0 +1,43 @@
+problem:
+  lambda_1: 0.1
+  lambda_2: 100.0
+  lambda_3: 10.0
+  delta: 0.1
+  epsilon: 0.3
+  sigma_scale: 0.1
+  domain_t: [0.0, 1.0]
+  domain_x: [-1.0, 1.0]
+
+targets:
+  train:
+    - [0.3, 0.3]
+    - [0.3, 0.6]
+    - [0.3, 0.9]
+    - [0.6, 0.3]
+    - [0.6, 0.6]
+    - [0.6, 0.9]
+    - [0.9, 0.3]
+    - [0.9, 0.6]
+    - [0.9, 0.9]
+  test:
+    - [0.45, 0.45]
+    - [0.45, 0.75]
+    - [0.75, 0.45]
+    - [0.75, 0.75]
+
+deeponet:
+  sensor_num_per_dim: 9
+  basis_dim: 64
+  width: 64
+  depth: 4
+
+train:
+  points_per_target: 2000
+  num_iters: 1000
+  num_epochs: 1000
+  lr: 1.0e-3
+  seeds: [0, 1, 2, 3, 4]
+  eval_every: 1
+  policy_refresh_fraction: 0.1
+  early_stop_window: 100
+  early_stop_tol: 1.0e-6

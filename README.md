@@ -80,6 +80,13 @@ python scripts/train_path_planning.py --config configs/path_planning_default.yam
 Default output name:
 `PI_N{Ni}_it{num_iters}_ep{num_epochs}_seed{seed}.pkl`
 
+DeepONet moving-obstacle baseline:
+```bash
+python scripts/generate_moving_fdm_targets.py --config configs/moving_fdm_targets.yaml --outdir data --skip_existing
+python scripts/train_deeponet_moving.py --config configs/deeponet_moving_default.yaml --fdm_dir data --outdir outputs/deeponet_run
+```
+The FDM reference arrays and trained DeepONet checkpoints are not tracked because of file size. These scripts provide the reference-generation and training entry points used for the revised held-out target-location comparison.
+
 Publisher-subscriber (PI):
 ```bash
 python scripts/train_ps.py --config configs/ps_default.yaml --mode pi --outdir outputs/ps_run/3d
@@ -117,7 +124,7 @@ Figures are saved to `plots/figures/`.
 
 Note:
 - `Figure_8.py` uses the tracked 3D small-diffusion publisher-subscriber checkpoints under `outputs/ps_small_diffusion/3d/`.
-- `Figure_9.py` records the DeepONet comparison metrics used in the revised experiments. Full DeepONet checkpoints are not tracked because they are intermediate artifacts.
+- `Figure_9.py` records the held-out DeepONet comparison metrics used in the revised experiments. Full DeepONet checkpoints are not tracked because they are intermediate artifacts.
 - `Figure_10.py` is an analytical Hamiltonian visualization and does not require training checkpoints.
 
 ## Output Schema
